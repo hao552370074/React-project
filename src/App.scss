@@ -1,0 +1,14 @@
+// .a{
+//  background-color: pink;
+//  p{
+//     color: red;
+//  }
+// }
+
+:global(.bb) {
+  color: red;
+}
+
+.home {
+  height: 1000px;
+}
