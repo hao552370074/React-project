@@ -40,7 +40,12 @@ class App extends Component {
         }
       ],
       collapsed: false,
-      z: "我给儿子得值"
+      z: "我给儿子得值",
+      nameList: [
+        { name: "首页" },
+        { name: "电影", lists: ["Top250", "经典电影"] },
+        { name: "关于" }
+      ]
     };
   }
 
@@ -82,16 +87,23 @@ class App extends Component {
     });
   }
 
-  homePath() {
-    history.push(`/home`);
-    let gzid = {
-      xid: 6,
-      uid: 11
-    };
-    api.get("/api/GetWeiBoUGuanList", gzid).then(res => {
-      console.log(res);
-    });
-  }
+  homePath = (i) => {
+    console.log(i);
+    if (i=='home') {
+      history.push('/home','哈哈');
+    }else if(i=='Top250'){
+      history.push('/movie/1/2')
+    }else{
+      history.push('/about')
+    }
+    // let gzid = {
+    //   xid: 6,
+    //   uid: 11
+    // };
+    // api.get("/api/GetWeiBoUGuanList", gzid).then(res => {
+    //   console.log(res);
+    // });
+  };
 
   getChildContext() {
     // console.log(this,'哈哈');
@@ -112,6 +124,7 @@ class App extends Component {
   }
 
   componentWillMount() {
+    // console.log(window.location.pathname.replace("/", ""));
     // console.log(document.querySelector('.div'), 1);
   }
 
@@ -141,7 +154,7 @@ class App extends Component {
               <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
             </Button> */}
           <Menu
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={[window.location.pathname.replace("/", "")]||['home']}
             defaultOpenKeys={["sub2"]}
             mode="inline"
             className="home"
@@ -157,23 +170,36 @@ class App extends Component {
                 </span>
               }
             >
-              <Menu.Item key="9" onClick={this.homePath.bind(this)}>
+              {/* {this.state.nameList.map((res, index) => {
+                return (
+                  <SubMenu key={index} title={res.name}>
+                    {(res.lists || []).map((item, k) => {
+                      if (item) {
+                        return <Menu.Item key={k}>{item}</Menu.Item>;
+                      }
+                    })}
+                  </SubMenu>
+                );
+              })} */}
+              <Menu.Item key="home" onClick={()=>this.homePath('home')}>
                 首页
               </Menu.Item>
               <SubMenu key="sub3" title="电影">
-                <Menu.Item key="11">
-                  <Link to="/movie/Top250/99">Top250</Link>
+                <Menu.Item key="movie" onClick={()=>this.homePath('Top250')}>
+                {/* <Link to="/movie/Top250/99">Top250</Link> */}
+                Top250
                 </Menu.Item>
               </SubMenu>
-              <Menu.Item key="10">
-                <Link to="/about">关于</Link>
+                <Menu.Item key="about" onClick={()=>this.homePath('about')}>
+              {/* <Link to="/about">关于</Link> */}
+              关于
               </Menu.Item>
             </SubMenu>
           </Menu>
         </div>
         <div style={{ float: "left" }}>
           <Route path="/home" component={Home}></Route>
-          <Route exact path="/movie/:type/:id" component={Movie}></Route>
+          <Route path="/movie/:type/:id" exact component={Movie}></Route>
           <Route path="/about" component={About}></Route>
         </div>
 

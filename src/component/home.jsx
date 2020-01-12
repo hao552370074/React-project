@@ -12,7 +12,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        这里是电影
+        这里是首页
         <p>{this.context.zhi}</p>
         <p>{this.props.location.state}</p>
       </div>
