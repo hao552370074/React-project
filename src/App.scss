@@ -9,6 +9,18 @@
   color: red;
 }
 
+.nav-left {
+  width: 10%;
+  // float: left;
+}
+
 .home {
   height: 1000px;
+}
+
+@media (max-width: 1200px) {
+  .nav-left {
+    width: 120px;
+    // float: left;
+  }
 }

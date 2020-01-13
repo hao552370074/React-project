@@ -10,7 +10,7 @@ import ReactTypes from "prop-types";
 import Tests from "./test";
 import appCsss from "../App.scss";
 
-import { Button, Modal, Menu, Icon } from "antd";
+import { Button, Modal, Menu, Icon, Tooltip, Card, Layout } from "antd";
 
 import Input from "../component/Input";
 import ThreeBim from "../component/three";
@@ -18,6 +18,9 @@ import ThreeBim from "../component/three";
 import Home from "../component/home";
 import About from "../component/about";
 import Movie from "../component/movie";
+
+const { SubMenu } = Menu;
+const { Header, Content, Sider } = Layout;
 
 class App extends Component {
   constructor(props) {
@@ -87,14 +90,14 @@ class App extends Component {
     });
   }
 
-  homePath = (i) => {
+  homePath = i => {
     console.log(i);
-    if (i=='home') {
-      history.push('/home','哈哈');
-    }else if(i=='Top250'){
-      history.push('/movie/1/2')
-    }else{
-      history.push('/about')
+    if (i == "home") {
+      history.push("/home", "哈哈");
+    } else if (i == "Top250") {
+      history.push("/movie/1/2");
+    } else {
+      history.push("/about");
     }
     // let gzid = {
     //   xid: 6,
@@ -140,12 +143,10 @@ class App extends Component {
   }
 
   render() {
-    const { SubMenu } = Menu;
-    console.log(this, "看着");
-    const { visible, loading } = this.state;
+    // const { visible, loading } = this.state;
     return (
-      <div>
-        <div style={{ width: 256, float: "left" }}>
+      <Layout>
+        <Sider>
           {/* <Button
               type="primary"
               onClick={this.toggleCollapsed}
@@ -154,7 +155,9 @@ class App extends Component {
               <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
             </Button> */}
           <Menu
-            defaultSelectedKeys={[window.location.pathname.replace("/", "")]||['home']}
+            defaultSelectedKeys={
+              [window.location.pathname.replace("/", "")] || ["home"]
+            }
             defaultOpenKeys={["sub2"]}
             mode="inline"
             className="home"
@@ -166,7 +169,7 @@ class App extends Component {
               title={
                 <span>
                   <Icon type="appstore" />
-                  <span>电影专区</span>
+                  <span title="电影专区">电影专区</span>
                 </span>
               }
             >
@@ -181,28 +184,29 @@ class App extends Component {
                   </SubMenu>
                 );
               })} */}
-              <Menu.Item key="home" onClick={()=>this.homePath('home')}>
-                首页
+              <Menu.Item key="home" onClick={() => this.homePath("home")}>
+                <span title="首页">首页</span>
               </Menu.Item>
               <SubMenu key="sub3" title="电影">
-                <Menu.Item key="movie" onClick={()=>this.homePath('Top250')}>
-                {/* <Link to="/movie/Top250/99">Top250</Link> */}
-                Top250
+                <Menu.Item key="movie" onClick={() => this.homePath("Top250")}>
+                  {/* <Link to="/movie/Top250/99">Top250</Link> */}
+                  <span title="Top250">Top250</span>
                 </Menu.Item>
               </SubMenu>
-                <Menu.Item key="about" onClick={()=>this.homePath('about')}>
-              {/* <Link to="/about">关于</Link> */}
-              关于
+              <Menu.Item key="about" onClick={() => this.homePath("about")}>
+                {/* <Link to="/about">关于</Link> */}
+                <span title="关于">关于</span>
               </Menu.Item>
             </SubMenu>
           </Menu>
-        </div>
-        <div style={{ float: "left" }}>
-          <Route path="/home" component={Home}></Route>
-          <Route path="/movie/:type/:id" exact component={Movie}></Route>
-          <Route path="/about" component={About}></Route>
-        </div>
-
+        </Sider>
+        <Layout>
+          <Content>
+            <Route path="/home" component={Home}></Route>
+            <Route path="/movie/:type/:id" exact component={Movie}></Route>
+            <Route path="/about" component={About}></Route>
+          </Content>
+        </Layout>
         {/* <a href="#" className='a'><p>哈哈</p></a> */}
         {/* <div className="div">
           这是text测试jsx格式{this.state.aa}
@@ -250,7 +254,7 @@ class App extends Component {
             return <ThreeBim key={i} {...item}></ThreeBim>;
           })}
         </div> */}
-      </div>
+      </Layout>
     );
   }
 }
