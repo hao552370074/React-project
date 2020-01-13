@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Link } from "react-router-dom";
+
 // 路由跳转
 import history from "../history/history";
 
@@ -48,7 +49,8 @@ class App extends Component {
         { name: "首页" },
         { name: "电影", lists: ["Top250", "经典电影"] },
         { name: "关于" }
-      ]
+      ],
+      objes: []
     };
   }
 
@@ -91,21 +93,30 @@ class App extends Component {
   }
 
   homePath = i => {
-    console.log(i);
     if (i == "home") {
-      history.push("/home", "哈哈");
+      let gzid = {
+        showapi_appid: 137717,
+        showapi_sign: "81d02ff003954048a66b25ee60608f9d",
+        page: 1,
+        maxResult: 10
+      };
+      api.get("/341-2", gzid).then(res => {
+        console.log(res);
+        history.push("/home", res.showapi_res_body.contentlist);
+      });
     } else if (i == "Top250") {
-      history.push("/movie/1/2");
+      history.push("/Top250");
     } else {
+      var url = "http://route.showapi.com/341-2";
+      // var headersUrl = "http://route.showapi.com";
+      var data = {
+        showapi_appid: 137717,
+        showapi_sign: "81d02ff003954048a66b25ee60608f9d",
+        page: 1,
+        maxResult: 10
+      };
       history.push("/about");
     }
-    // let gzid = {
-    //   xid: 6,
-    //   uid: 11
-    // };
-    // api.get("/api/GetWeiBoUGuanList", gzid).then(res => {
-    //   console.log(res);
-    // });
   };
 
   getChildContext() {
@@ -127,6 +138,10 @@ class App extends Component {
   }
 
   componentWillMount() {
+    let paths=window.location.pathname.replace('/','');
+   
+    
+    this.homePath(paths)
     // console.log(window.location.pathname.replace("/", ""));
     // console.log(document.querySelector('.div'), 1);
   }
@@ -155,9 +170,9 @@ class App extends Component {
               <Icon type={this.state.collapsed ? "menu-unfold" : "menu-fold"} />
             </Button> */}
           <Menu
-            defaultSelectedKeys={
-              [window.location.pathname.replace("/", "")] || ["home"]
-            }
+            defaultSelectedKeys={[
+              window.location.pathname.replace("/", "") || "home"
+            ]}
             defaultOpenKeys={["sub2"]}
             mode="inline"
             className="home"
@@ -173,28 +188,16 @@ class App extends Component {
                 </span>
               }
             >
-              {/* {this.state.nameList.map((res, index) => {
-                return (
-                  <SubMenu key={index} title={res.name}>
-                    {(res.lists || []).map((item, k) => {
-                      if (item) {
-                        return <Menu.Item key={k}>{item}</Menu.Item>;
-                      }
-                    })}
-                  </SubMenu>
-                );
-              })} */}
               <Menu.Item key="home" onClick={() => this.homePath("home")}>
                 <span title="首页">首页</span>
               </Menu.Item>
               <SubMenu key="sub3" title="电影">
-                <Menu.Item key="movie" onClick={() => this.homePath("Top250")}>
+                <Menu.Item key="Top250" onClick={() => this.homePath("Top250")}>
                   {/* <Link to="/movie/Top250/99">Top250</Link> */}
                   <span title="Top250">Top250</span>
                 </Menu.Item>
               </SubMenu>
               <Menu.Item key="about" onClick={() => this.homePath("about")}>
-                {/* <Link to="/about">关于</Link> */}
                 <span title="关于">关于</span>
               </Menu.Item>
             </SubMenu>
@@ -203,7 +206,11 @@ class App extends Component {
         <Layout>
           <Content>
             <Route path="/home" component={Home}></Route>
-            <Route path="/movie/:type/:id" exact component={Movie}></Route>
+            <Route
+              path="/Top250"
+              
+              component={Movie}
+            ></Route>
             <Route path="/about" component={About}></Route>
           </Content>
         </Layout>
