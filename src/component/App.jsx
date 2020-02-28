@@ -101,12 +101,14 @@ class App extends Component {
         page: 1,
         maxResult: 10
       };
-      api.get("/341-2", gzid).then(res => {
-        console.log(res);
-        history.push("/home", res.showapi_res_body.contentlist);
+      // api.get("/341-2", gzid).then(res => {
+      api.get("/mongo", gzid).then(res => {
+        console.log('res',res);
+        // history.push("/home", res.showapi_res_body.contentlist);
+        history.push("/home", res);
       });
     } else if (i == "Top250") {
-      history.push("/Top250");
+      history.push("/movie"+'/'+1+'/'+2);
     } else {
       var url = "http://route.showapi.com/341-2";
       // var headersUrl = "http://route.showapi.com";
@@ -116,7 +118,7 @@ class App extends Component {
         page: 1,
         maxResult: 10
       };
-      history.push("/about");
+      history.push("/home");
     }
   };
 
@@ -206,12 +208,8 @@ class App extends Component {
         </Sider>
         <Layout>
           <Content>
-            <Route path="/home" component={Home}></Route>
-            <Route
-              path="/Top250"
-              
-              component={Movie}
-            ></Route>
+            <Route path="/home" component={Home} exact></Route>
+            <Route path="/movie/:type/:id" component={Movie} exact></Route>
             <Route path="/about" component={About}></Route>
           </Content>
         </Layout>

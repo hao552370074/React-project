@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ReactTypes from "prop-types";
+// 路由跳转
+import history from "../history/history";
 import {
   Button,
   Modal,
@@ -9,7 +11,8 @@ import {
   Card,
   Col,
   Row,
-  Layout
+  Layout,
+  Pagination
 } from "antd";
 const { Header, Content, Sider } = Layout;
 
@@ -17,22 +20,45 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      objs:props.location.state,
+      objs: props.location.state
     };
   }
   static contextTypes = {
     zhi: ReactTypes.string
   };
+
+  componentWillReceiveProps(nextProps) {
+    // console.log(nextProps);
+
+    // let key = nextProps.match.params.key;
+    this.setState({
+      objs: nextProps.location.state
+    });
+  }
+
+  onChange(a, b) {
+    console.log(a, b);
+    history.push("/movie" + "/" + a + "/" + a, "值哦");
+    // window.location.href='/movie/'+a+'/'+a
+  }
+
   render() {
-    console.log('home',this);
-    
+    console.log("home", this);
+
     return (
-      <div style={{ background: "#ECECEC", padding: "20px",height:"100%" }}>
+      <div style={{ background: "#ECECEC", padding: "20px", height: "100%" }}>
         <Card title="首页" bordered={false} style={{ width: "100%" }}>
           <p>{this.context.zhi}</p>
-          {this.state.objs.map((item,index)=>{
-            return <a key={index} style={{margin:"20px 20px",}} href={item.img} target="_blank">{item.title}</a>
-          })}
+          <Pagination
+            onChange={this.onChange}
+            defaultCurrent={6}
+            total={200}
+            defaultCurrent={1}
+            pageSize={20}
+          ></Pagination>
+          {this.state.objs?this.state.objs.data.map((item,index)=>{
+            return <a key={index} style={{margin:"20px 20px",}} href={item.img} target="_blank">{item.name}</a>
+          }):<a>空</a>}
           {/* <p>{this.props.location.state.toString()}</p> */}
         </Card>
       </div>

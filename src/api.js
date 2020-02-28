@@ -2,7 +2,8 @@ import axios from "axios";
 var qs = require("qs");
 
 // 请求前缀的地址
-axios.defaults.baseURL = "http://route.showapi.com";
+// axios.defaults.baseURL = "http://route.showapi.com";
+axios.defaults.baseURL='http://127.0.0.1:8088/'
 // c1ffb8ed71c54029b3bcadb364ba0acb
 axios.interceptors.request.use(config => {
   if (localStorage.getItem("token")) {
