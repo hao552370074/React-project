@@ -19,7 +19,7 @@ class About extends Component {
     this.state = {};
   }
   render() {
-    // console.log(this.props);
+    console.log(this.props);
     const { counter, dispatch, add, minus, asncAdd } = this.props;
     return (
       <div style={{ background: "#ECECEC", padding: "20px", height: "100%" }}>
@@ -43,7 +43,7 @@ class About extends Component {
 //connect是高阶函数
 export default connect(
   //mapStateToProps
-  (state) => ({ counter: state.counter }),
+  (state) => state,
   //mapDispatchToProps
   {
     add,
