@@ -118,7 +118,7 @@ class App extends Component {
         page: 1,
         maxResult: 10
       };
-      history.push("/home");
+      history.push("/about");
     }
   };
 
@@ -143,8 +143,9 @@ class App extends Component {
   componentWillMount() {
     let paths=window.location.pathname.replace('/','');
    
+    console.log(window.location.pathname);
     
-    this.homePath(paths)
+    // this.homePath(paths)
     // console.log(window.location.pathname.replace("/", ""));
     // console.log(document.querySelector('.div'), 1);
   }

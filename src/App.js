@@ -1,6 +1,6 @@
-import React from 'react';
-import logo from './logo.svg';
-import Text from './component/test'
+import React from "react";
+import logo from "./logo.svg";
+import Text from "./component/test";
 
 function App() {
   return (
