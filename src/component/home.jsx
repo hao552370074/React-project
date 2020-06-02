@@ -59,7 +59,7 @@ class Home extends Component {
     return (
       <div style={{ background: "#ECECEC", padding: "20px", height: "100%" }}>
         <Card title="首页" bordered={false} style={{ width: "100%" }}>
-        <p>{counter}</p>
+          <p>{counter}</p>
           <p onClick={this.reduxS}>{this.context.zhi}</p>
           <p>{this.state.reduxX}</p>
           <Pagination

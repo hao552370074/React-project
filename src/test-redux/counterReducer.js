@@ -42,8 +42,6 @@ async function post(url, data) {
 export function counterReducer(state = 0, action) {
   switch (action.type) {
     case "add":
-    //   console.log(axios);
-
       return state + 10;
     case "minus":
       return state - 1;
